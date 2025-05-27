@@ -1,0 +1,19 @@
+# Create project folder and navigate into it
+mkdir bootstrap-sass-custom
+cd bootstrap-sass-custom
+
+# Initialize npm
+npm init -y
+
+# Install Bootstrap and Sass
+npm install bootstrap sass
+
+# Create folder structure
+mkdir scss css
+
+# Create a custom.scss file inside scss folder with this content:
+
+# scss/custom.scss
+@import "../node_modules/bootstrap/scss/functions";
+@import "variables";  // custom variables file
+@import "../node_modules/bootstrap/scss/bootstrap";

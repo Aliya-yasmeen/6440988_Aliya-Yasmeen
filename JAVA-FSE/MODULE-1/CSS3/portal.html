@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#events">EVENTS</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+
+  <!-- Welcome -->
+  <div id="welcomeBanner">
+    Welcome back, <span class="highlight">Resident!</span><br />
+    <span style="color: red; font-weight: bold;">Special Offer:</span> Register today and get a free pair of shoe!
+  </div>
+
+  <!-- Main -->
+  <main id="home">
+    <h2>Home</h2>
+    <p>Welcome to the Local Community Event Portal. Stay connected and participate in upcoming events!</p>
+  </main>
+
+  <!-- Events -->
+  <section id="events">
+    <h2>Events</h2>
+    <ul>
+      <li><strong>Spring Festival</strong> - April 15, 2025</li>
+      <li><strong>Health Fair</strong> - May 3, 2025</li>
+      <li><strong>Farmers Market</strong> - Every Saturday</li>
+    </ul>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <h2>Event Gallery</h2>
+    <table>
+      <caption>Memories from Past Events</caption>
+      <tr>
+        <td><img src="https://i.pinimg.com/736x/76/91/b4/7691b4616b91f09946cfa28c8bcd4da6.jpg" alt="Festival Parade" title="Festival Parade" class="gallery-img" ondblclick="toggleSize(this)"width="250" height="300">></td>
+        <td><img src="https://i.pinimg.com/736x/de/b6/f9/deb6f9c91c0798e5f4e4784bbc4cbb0b.jpg" alt="Local Farmers" title="Local Farmers" class="gallery-img" ondblclick="toggleSize(this)"width="150" height="300">></td>
+        <td><img src="https://i.pinimg.com/736x/d3/6c/2a/d36c2a0cb20b48aa1c63ef13aac7a8a1.jpg" alt="Wellness Booth" title="Wellness Booth" class="gallery-img" ondblclick="toggleSize(this)"width="250" height="300">></td>
+      </tr>
+      <tr>
+        <td><img src="https://i.pinimg.com/736x/2c/1f/d6/2c1fd6a7c6ad699af7333269d3e1e53e.jpg" alt="Craft Stalls" title="Craft Stalls" class="gallery-img" ondblclick="toggleSize(this)"width="250" height="300">></td>
+        <td><img src="https://i.pinimg.com/736x/20/4f/f8/204ff81dac71d85bc6069fdaf7d55b25.jpg" alt="Community Dance" title="Community Dance" class="gallery-img" ondblclick="toggleSize(this)"width="150" height="300">></td>
+        <td><img src="https://i.pinimg.com/736x/98/b0/4e/98b04ef5828dde4a5a4257cd38b9ad92.jpg" alt="Kids Games" title="Kids Games" class="gallery-img" ondblclick="toggleSize(this)"width="250" height="300">></td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Registration -->
+  <section id="register">
+    <h2>Event Registration</h2>
+    <form onsubmit="handleRegister(event)">
+      <input type="text" id="regName" placeholder="Your Name" required autofocus />
+      <input type="email" id="regEmail" placeholder="Email" required />
+      <input type="date" id="regDate" required />
+      <input type="tel" id="regPhone" placeholder="Phone Number" onblur="validatePhone(this)" required />
+      <select id="regEventType" onchange="showFee(this)">
+        <option value="">Select Event</option>
+        <option value="Spring Festival">Spring Festival</option>
+        <option value="Health Fair">Health Fair</option>
+      </select>
+      <textarea id="regMsg" placeholder="Message" rows="4" onkeyup="countChars(this)"></textarea>
+      <p>Characters typed: <span id="charCount">0</span></p>
+      <button type="submit" onclick="confirmRegister()">Submit</button>
+      <button type="button" onclick="clearPreferences()">Clear Preferences</button><br>
+      <output id="regOutput"></output>
+      <p>Event Fee: <span id="eventFee">₹0</span></p>
+    </form>
+  </section>
+
+  <!-- Feedback -->
+  <section id="feedback">
+    <h2>Event Feedback</h2>
+    <form>
+      <textarea id="feedbackText" rows="4" placeholder="Share your experience..." onkeyup="countChars(this)"></textarea>
+      <p>Characters typed: <span id="charCount">0</span></p>
+      <button type="submit" onclick="confirmFeedback()">Submit</button>
+      <output id="regOutput"></output>
+    </form>
+  </section>
+
+  <!-- Video Invite -->
+  <section id="video">
+    <div class="video-container">
+      <video width="320" controls 
+        oncanplay="alert('Video ready to play')" 
+        onplay="console.log('Playing video')" 
+        onended="console.log('Video ended')">
+        <source src="https://videocdn.cdnpk.net/videos/05cde89a-a7c8-5519-b7fd-757619c8c164/horizontal/previews/watermarked/large.mp4" type="video/mp4">
+        Your browser does not support video.
+      </video>
+    </div>
+  </section>
+
+  <!-- Geolocation -->
+  <section id="location">
+    <h2>Find Nearby Events</h2>
+    <button onclick="getLocation()">Find Nearby Events</button>
+    <p id="geoOutput"></p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:contact@citycouncil.local">contact@citycouncil.local</a></p>
+    <p>Phone: (123) 456-7890</p>
+    <p>Office Hours: Mon–Fri, 9am–5pm</p>
+    <p><a href="help.html" target="_blank">Help Document</a></p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Local City Council. All rights reserved.
+  </footer>
+
+  <script>
+    // Image zoom
+    function toggleSize(img) {
+      img.classList.toggle('large');
+    }
+
+    // Phone validation
+    function validatePhone(input) {
+      const pattern = /^\d{10}$/;
+      if (!pattern.test(input.value)) {
+        alert("Please enter a valid 10-digit phone number.");
+        input.focus();
+      }
+    }
+
+    // Event Fee
+    function showFee(select) {
+      const feeMap = {
+        "Spring Festival": "₹100",
+        "Health Fair": "₹50"
+      };
+      document.getElementById("eventFee").innerText = feeMap[select.value] || "₹0";
+
+      // Save preference
+      localStorage.setItem("preferredEvent", select.value);
+    }
+
+    // Register handler
+    function handleRegister(event) {
+      event.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      document.getElementById('regOutput').value = `Thanks ${name}, confirmation sent to ${email}`;
+    }
+
+    function confirmRegister() {
+      console.log("Submit clicked.");
+    }
+    function confirmFeedback() {
+      console.log("Submit clicked.");
+    }
+
+    function countChars(el) {
+      document.getElementById("charCount").innerText = el.value.length;
+    }
+
+    // Geolocation
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError, { enableHighAccuracy: true, timeout: 5000 });
+      } else {
+        document.getElementById("geoOutput").innerText = "Geolocation is not supported.";
+      }
+    }
+
+    function showPosition(position) {
+      document.getElementById("geoOutput").innerText = `Your Coordinates: Latitude ${position.coords.latitude}, Longitude ${position.coords.longitude}`;
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          alert("Permission denied.");
+          break;
+        case error.TIMEOUT:
+          alert("Location request timed out.");
+          break;
+        default:
+          alert("Geolocation error.");
+      }
+    }
+
+    // Restore event preference on load
+    window.onload = function () {
+      const saved = localStorage.getItem("preferredEvent");
+      if (saved) {
+        document.getElementById("regEventType").value = saved;
+        showFee(document.getElementById("regEventType"));
+      }
+    };
+
+    // Clear preferences
+    function clearPreferences() {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("Preferences cleared.");
+      location.reload();
+    }
+
+    // Warn before leaving unfinished form
+    window.onbeforeunload = function () {
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      if (name || email) {
+        return "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+  </script>
+
+</body>
+</html>
